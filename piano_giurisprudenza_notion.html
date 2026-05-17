@@ -1,0 +1,789 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Piano Giurisprudenza italiana e francese — UniFI</title>
+<style>
+:root {
+  --bg: #ffffff; --bg2: #f7f6f3; --bg3: #eeece9;
+  --text: #1a1a1a; --text2: #5a5a5a; --text3: #999;
+  --border: #e0ddd8;
+  --blue50:#E6F1FB;--blue200:#85B7EB;--blue600:#185FA5;--blue800:#0C447C;
+  --green50:#EAF3DE;--green200:#97C459;--green600:#3B6D11;--green800:#27500A;
+  --amber50:#FAEEDA;--amber200:#EF9F27;--amber600:#854F0B;--amber800:#633806;
+  --purple50:#EEEDFE;--purple200:#AFA9EC;--purple600:#534AB7;--purple800:#3C3489;
+  --red50:#FCEBEB;--red200:#F09595;--red600:#A32D2D;--red800:#791F1F;
+  --gray50:#F1EFE8;--gray200:#B4B2A9;--gray600:#5F5E5A;--gray800:#444441;
+  --teal50:#E1F5EE;--teal200:#5DCAA5;--teal600:#0F6E56;--teal800:#085041;
+  --radius: 8px; --radius-lg: 12px;
+  font-size: 14px;
+}
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg:#191919;--bg2:#242424;--bg3:#2f2f2f;
+    --text:#e8e6e1;--text2:#999;--text3:#666;
+    --border:#333;
+    --blue50:#042C53;--blue200:#185FA5;--blue600:#85B7EB;--blue800:#B5D4F4;
+    --green50:#173404;--green200:#3B6D11;--green600:#97C459;--green800:#C0DD97;
+    --amber50:#412402;--amber200:#854F0B;--amber600:#EF9F27;--amber800:#FAC775;
+    --purple50:#26215C;--purple200:#534AB7;--purple600:#AFA9EC;--purple800:#CECBF6;
+    --red50:#501313;--red200:#A32D2D;--red600:#F09595;--red800:#F7C1C1;
+    --gray50:#2C2C2A;--gray200:#5F5E5A;--gray600:#B4B2A9;--gray800:#D3D1C7;
+    --teal50:#04342C;--teal200:#0F6E56;--teal600:#5DCAA5;--teal800:#9FE1CB;
+  }
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{background:var(--bg);color:var(--text);font-family:-apple-system,BlinkMacSystemFont,'Segoe UI',sans-serif;padding:0;min-height:100vh}
+.app{max-width:900px;margin:0 auto;padding:1.5rem 1rem}
+
+/* header */
+.header{padding:1.25rem 0 1rem;border-bottom:1px solid var(--border);margin-bottom:1.25rem}
+.header h1{font-size:20px;font-weight:600;color:var(--text);margin-bottom:4px}
+.header p{font-size:13px;color:var(--text2)}
+.badges{display:flex;gap:6px;flex-wrap:wrap;margin-top:10px}
+.badge{font-size:11px;font-weight:500;padding:3px 9px;border-radius:20px}
+.b-blue{background:var(--blue50);color:var(--blue800)}
+.b-green{background:var(--green50);color:var(--green800)}
+.b-amber{background:var(--amber50);color:var(--amber800)}
+.b-red{background:var(--red50);color:var(--red800)}
+.b-purple{background:var(--purple50);color:var(--purple800)}
+.b-gray{background:var(--gray50);color:var(--gray800)}
+.b-teal{background:var(--teal50);color:var(--teal800)}
+
+/* phase nav */
+.phase-nav{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:1.25rem}
+.phase-btn{padding:6px 12px;font-size:12px;font-weight:500;border:1px solid var(--border);border-radius:var(--radius);background:var(--bg2);color:var(--text2);cursor:pointer;transition:all .15s}
+.phase-btn:hover{background:var(--bg3);color:var(--text)}
+.phase-btn.active{border-color:currentColor}
+.phase-btn.pb-blue.active{background:var(--blue50);color:var(--blue800);border-color:var(--blue200)}
+.phase-btn.pb-green.active{background:var(--green50);color:var(--green800);border-color:var(--green200)}
+.phase-btn.pb-amber.active{background:var(--amber50);color:var(--amber800);border-color:var(--amber200)}
+.phase-btn.pb-purple.active{background:var(--purple50);color:var(--purple800);border-color:var(--purple200)}
+.phase-btn.pb-red.active{background:var(--red50);color:var(--red800);border-color:var(--red200)}
+.phase-btn.pb-teal.active{background:var(--teal50);color:var(--teal800);border-color:var(--teal200)}
+
+/* section */
+.section{display:none}.section.active{display:block}
+.section-intro{font-size:13px;color:var(--text2);margin-bottom:1rem;line-height:1.6;padding:10px 14px;background:var(--bg2);border-radius:var(--radius);border-left:3px solid var(--border)}
+
+/* info boxes */
+.infobox{border-radius:var(--radius);padding:12px 14px;margin-bottom:10px}
+.infobox-title{font-size:12px;font-weight:600;margin-bottom:6px;text-transform:uppercase;letter-spacing:.04em}
+.infobox ul{padding-left:16px}
+.infobox li{font-size:12px;line-height:1.7;color:var(--text2)}
+.ib-blue{background:var(--blue50)}.ib-blue .infobox-title{color:var(--blue800)}
+.ib-green{background:var(--green50)}.ib-green .infobox-title{color:var(--green800)}
+.ib-amber{background:var(--amber50)}.ib-amber .infobox-title{color:var(--amber800)}
+.ib-red{background:var(--red50)}.ib-red .infobox-title{color:var(--red800)}
+.ib-purple{background:var(--purple50)}.ib-purple .infobox-title{color:var(--purple800)}
+.ib-gray{background:var(--gray50)}.ib-gray .infobox-title{color:var(--gray800)}
+
+/* week accordion */
+.week{border:1px solid var(--border);border-radius:var(--radius-lg);margin-bottom:8px;overflow:hidden}
+.week-head{display:flex;align-items:center;gap:10px;padding:10px 14px;cursor:pointer;background:var(--bg)}
+.week-head:hover{background:var(--bg2)}
+.week-label{font-size:13px;font-weight:500;color:var(--text);flex:1}
+.week-dates{font-size:11px;color:var(--text3)}
+.week-chev{font-size:11px;color:var(--text3);transition:transform .2s;flex-shrink:0}
+.week-chev.open{transform:rotate(90deg)}
+.week-body{display:none;border-top:1px solid var(--border);padding:12px 14px}
+.week-body.open{display:block}
+
+/* tip */
+.tip{font-size:12px;color:var(--text2);font-style:italic;padding:8px 12px;border-left:2px solid var(--border);margin-bottom:10px;line-height:1.6}
+
+/* legend */
+.legend{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:12px}
+.leg{display:flex;align-items:center;gap:5px;font-size:11px;color:var(--text2)}
+.leg-dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+
+/* day grid */
+.days-grid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px}
+@media(max-width:600px){.days-grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+.day-col{min-width:0}
+.day-name{font-size:10px;font-weight:600;color:var(--text3);text-transform:uppercase;letter-spacing:.04em;margin-bottom:4px;text-align:center}
+.day-items{display:flex;flex-direction:column;gap:3px}
+.day-item{font-size:11px;line-height:1.45;padding:4px 6px;border-radius:5px;color:var(--text)}
+.di-fr{background:var(--blue50);color:var(--blue800)}
+.di-dr{background:var(--green50);color:var(--green800)}
+.di-cu{background:var(--amber50);color:var(--amber800)}
+.di-sc{background:var(--red50);color:var(--red800);font-weight:500}
+.di-ri{background:var(--gray50);color:var(--gray600)}
+
+/* table */
+.plan-table{width:100%;border-collapse:collapse;font-size:12px;margin-bottom:1rem}
+.plan-table th{background:var(--bg3);color:var(--text2);font-weight:500;padding:7px 10px;text-align:left;border-bottom:1px solid var(--border)}
+.plan-table td{padding:7px 10px;border-bottom:1px solid var(--border);color:var(--text);vertical-align:top;line-height:1.5}
+.plan-table tr:last-child td{border-bottom:none}
+.plan-table tr:nth-child(odd) td{background:var(--bg2)}
+
+/* sim counter */
+.sim-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(80px,1fr));gap:6px;margin-bottom:1rem}
+.sim-card{background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);padding:8px 10px;text-align:center}
+.sim-num{font-size:18px;font-weight:600;color:var(--text)}
+.sim-label{font-size:10px;color:var(--text2);margin-top:2px}
+
+/* h2 h3 */
+.sh2{font-size:15px;font-weight:600;color:var(--text);margin:1.25rem 0 .5rem;padding-bottom:4px;border-bottom:1px solid var(--border)}
+.sh3{font-size:13px;font-weight:500;color:var(--text2);margin:.75rem 0 .4rem}
+</style>
+</head>
+<body>
+<div class="app">
+
+<div class="header">
+  <h1>Piano di preparazione — Giurisprudenza italiana e francese</h1>
+  <p>Università degli Studi di Firenze · Université Paris I Panthéon-Sorbonne</p>
+  <div class="badges">
+    <span class="badge b-blue">Giugno 2026 – Luglio 2027</span>
+    <span class="badge b-green">5 fasi di studio</span>
+    <span class="badge b-red">16 simulazioni scritte</span>
+    <span class="badge b-purple">Maturità LES inclusa</span>
+    <span class="badge b-amber">Selezione: 23–25 luglio 2027</span>
+  </div>
+</div>
+
+<div class="phase-nav">
+  <button class="phase-btn pb-gray active" onclick="showPhase('panoramica',this)">Panoramica</button>
+  <button class="phase-btn pb-teal" onclick="showPhase('maturita',this)">Maturità LES</button>
+  <button class="phase-btn pb-blue" onclick="showPhase('fase1',this)">Fase 1 — Giu/Ago</button>
+  <button class="phase-btn pb-green" onclick="showPhase('fase2',this)">Fase 2 — Set/Nov</button>
+  <button class="phase-btn pb-amber" onclick="showPhase('fase3',this)">Fase 3 — Dic/Feb</button>
+  <button class="phase-btn pb-purple" onclick="showPhase('fase4',this)">Fase 4 — Mar/Mag</button>
+  <button class="phase-btn pb-red" onclick="showPhase('fase5',this)">Fase 5 — Giu/Lug</button>
+</div>
+
+<!-- PANORAMICA -->
+<div class="section active" id="panoramica">
+  <div class="section-intro">Seleziona una fase dal menu qui sopra per vedere il piano settimanale dettagliato. Questa schermata mostra la struttura complessiva del percorso.</div>
+  <div class="sh2">Le 5 fasi</div>
+  <table class="plan-table">
+    <thead><tr><th>Fase</th><th>Periodo</th><th>Focus principale</th><th>Obiettivo</th></tr></thead>
+    <tbody>
+      <tr><td><span class="badge b-blue">Fase 1</span></td><td>Giu – Ago 2026</td><td>Fondamenta & abitudini</td><td>B2 consolidato, basi diritto FR</td></tr>
+      <tr><td><span class="badge b-green">Fase 2</span></td><td>Set – Nov 2026</td><td>Costruzione sistematica</td><td>C1 ricettivo, 8 simulazioni</td></tr>
+      <tr><td><span class="badge b-amber">Fase 3</span></td><td>Dic 2026 – Feb 2027</td><td>Simulazioni & orale avanzato</td><td>C1 produttivo, colloquio fluido</td></tr>
+      <tr><td><span class="badge b-purple">Fase 4</span></td><td>Mar – Mag 2027</td><td>Maturità + candidatura</td><td>Lettera finalizzata, voto ≥70</td></tr>
+      <tr><td><span class="badge b-red">Fase 5</span></td><td>Giu – Lug 2027</td><td>Rifinitura & prove</td><td>Superamento selezione</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sh2">Le 3 prove di selezione</div>
+  <div class="infobox ib-blue" style="margin-bottom:8px">
+    <div class="infobox-title">Prova scritta — 23 luglio 2027</div>
+    <ul><li>Commento in francese a un testo di attualità politico-sociale</li><li>1 ora, senza vocabolario, campus Novoli Firenze</li></ul>
+  </div>
+  <div class="infobox ib-green" style="margin-bottom:8px">
+    <div class="infobox-title">Colloquio orale — 23–25 luglio 2027</div>
+    <ul><li>In francese e italiano, su motivazioni, cultura generale, diritto e attualità</li><li>Commissione mista UniFI + Paris I</li></ul>
+  </div>
+  <div class="infobox ib-amber">
+    <div class="infobox-title">Lettera di motivazione</div>
+    <ul><li>In italiano e in francese, firmata a mano</li><li>Allegata alla domanda online (3 giugno – 16 luglio 2027)</li></ul>
+  </div>
+
+  <div class="sh2">Conteggio simulazioni scritte</div>
+  <div class="sim-grid">
+    <div class="sim-card"><div class="sim-num" style="color:var(--blue800)">3</div><div class="sim-label">Fase 1</div></div>
+    <div class="sim-card"><div class="sim-num" style="color:var(--green800)">5</div><div class="sim-label">Fase 2</div></div>
+    <div class="sim-card"><div class="sim-num" style="color:var(--amber800)">4</div><div class="sim-label">Fase 3</div></div>
+    <div class="sim-card"><div class="sim-num" style="color:var(--purple800)">3</div><div class="sim-label">Fase 4 (mat.)</div></div>
+    <div class="sim-card"><div class="sim-num" style="color:var(--red800)">4</div><div class="sim-label">Fase 5</div></div>
+    <div class="sim-card" style="border-color:var(--red200)"><div class="sim-num">16+</div><div class="sim-label">Totale</div></div>
+  </div>
+
+  <div class="sh2">Scadenze critiche</div>
+  <table class="plan-table">
+    <thead><tr><th>Data</th><th>Scadenza</th></tr></thead>
+    <tbody>
+      <tr><td>3 giugno 2027</td><td>Apertura portale domande UniFI</td></tr>
+      <tr><td>16 luglio 2027 ore 12:00</td><td>Scadenza domanda — nessuna proroga</td></tr>
+      <tr><td>23 luglio 2027</td><td>Prova scritta (ore 9:00, campus Novoli)</td></tr>
+      <tr><td>23–25 luglio 2027</td><td>Colloqui orali in francese e italiano</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sh2">Profilo di partenza</div>
+  <div class="infobox ib-green" style="margin-bottom:8px">
+    <div class="infobox-title">Punti di forza</div>
+    <ul>
+      <li>Francese scolastico con letteratura e cultura — livello B2 certificato</li>
+      <li>LES: base di diritto italiano, economia, scienze sociali</li>
+      <li>Ragionamento critico e giuridico già sviluppato</li>
+      <li>Un anno intero di preparazione disponibile</li>
+    </ul>
+  </div>
+  <div class="infobox ib-red">
+    <div class="infobox-title">Aree da sviluppare</div>
+    <ul>
+      <li>Francese: da B2 a C1 (accenti, accordi, lessico formale)</li>
+      <li>Diritto francese e comparato — nessuna base attuale</li>
+      <li>Struttura del commentaire de texte formale</li>
+      <li>Fluidità orale in francese sotto pressione</li>
+    </ul>
+  </div>
+</div>
+
+<!-- MATURITÀ LES -->
+<div class="section" id="maturita">
+  <div class="section-intro">Il voto di maturità è requisito formale per la Sorbona (minimo 70/100) e contribuisce al dossier di candidatura. Le prove del LES si integrano perfettamente con la preparazione alla selezione.</div>
+
+  <div class="sh2">Prima prova — Italiano</div>
+  <div class="infobox ib-purple" style="margin-bottom:10px">
+    <div class="infobox-title">Tipologie e sinergia con la selezione UniFI</div>
+    <ul>
+      <li>Tipologia A (analisi del testo): struttura simile al commentaire francese</li>
+      <li>Tipologia B (testo argomentativo): costruire una tesi con fonti — competenza chiave anche per il colloquio</li>
+      <li>Tipologia C (tema di attualità): area di sovrapposizione diretta con la selezione UniFI</li>
+    </ul>
+  </div>
+  <table class="plan-table">
+    <thead><tr><th>Periodo</th><th>Attività</th><th>Obiettivo</th></tr></thead>
+    <tbody>
+      <tr><td>Set–Ott 2026</td><td>1 tema al mese (Tip. B o C): tesi + 2 argomenti + conclusione, 3 ore</td><td>Struttura argomentativa stabile</td></tr>
+      <tr><td>Nov–Dic 2026</td><td>1 analisi del testo al mese (Tip. A): parafrasi + analisi retorica + commento</td><td>Padronanza Tipologia A</td></tr>
+      <tr><td>Gen–Feb 2027</td><td>Simulazione completa mensile (tutte le tipologie a rotazione)</td><td>Velocità e qualità di scrittura</td></tr>
+      <tr><td>Mar–Apr 2027</td><td>2 simulazioni al mese — temi frequenti: Costituzione, società, ambiente, tecnologia</td><td>Automatizzare la struttura</td></tr>
+      <tr><td>Mag 2027</td><td>Ripasso temi d'esame + rilettura elaborati corretti precedenti</td><td>Consolidamento finale</td></tr>
+    </tbody>
+  </table>
+
+  <div class="sh2">Seconda prova — Scienze Umane e Diritto</div>
+  <div class="infobox ib-teal" style="background:var(--teal50);margin-bottom:10px">
+    <div class="infobox-title" style="color:var(--teal800)">Sinergia con la selezione UniFI</div>
+    <ul><li>Diritto, economia e scienze sociali della seconda prova coincidono quasi perfettamente con i temi del colloquio orale</li><li>Ogni simulazione su Stato, democrazia, Europa vale doppio</li></ul>
+  </div>
+  <table class="plan-table">
+    <thead><tr><th>Periodo</th><th>Attività</th><th>Obiettivo</th></tr></thead>
+    <tbody>
+      <tr><td>Set–Ott 2026</td><td>Ripassa i moduli di diritto e sociologia del programma LES anno precedente</td><td>Base solida per la quinta</td></tr>
+      <tr><td>Nov–Dic 2026</td><td>1 dossier al mese: analisi documenti misti (grafici + testi normativi)</td><td>Lettura critica delle fonti</td></tr>
+      <tr><td>Gen–Feb 2027</td><td>Simulazione seconda prova mensile: Stato, democrazia, welfare, globalizzazione</td><td>Struttura risposta articolata</td></tr>
+      <tr><td>Mar–Apr 2027</td><td>2 simulazioni al mese — alternare diritto puro e temi interdisciplinari</td><td>Flessibilità tematica</td></tr>
+      <tr><td>Mag 2027</td><td>Ripasso glossario tecnico (diritto, economia, scienze sociali) + simulazione finale</td><td>Consolidamento</td></tr>
+    </tbody>
+  </table>
+</div>
+
+<!-- FASE 1 -->
+<div class="section" id="fase1">
+  <div class="section-intro">Giugno – Agosto 2026 · Obiettivo: B2 consolidato, prime basi di diritto francese, 3 simulazioni scritte. Costruire l'abitudine prima del contenuto.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
+    <div class="infobox ib-blue"><div class="infobox-title">Focus</div><ul><li>Accenti e accordi (errori sistematici)</li><li>Connettivi formali</li><li>Sistemi giudiziari IT/FR</li><li>UE e diritti fondamentali</li></ul></div>
+    <div class="infobox ib-gray"><div class="infobox-title">Agosto (ritmo ridotto)</div><ul><li>3 attività a settimana</li><li>Lettura libera in francese</li><li>Podcast/serie (ascolto passivo)</li></ul></div>
+  </div>
+  <div id="weeks-fase1"></div>
+</div>
+
+<!-- FASE 2 -->
+<div class="section" id="fase2">
+  <div class="section-intro">Settembre – Novembre 2026 · Obiettivo: C1 ricettivo, commentaire strutturato (plan dialectique), 8 simulazioni complessive. La scuola riprende: blocchi da 40 min, non sessioni lunghe.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
+    <div class="infobox ib-green"><div class="infobox-title">Nuovi contenuti</div><ul><li>Contratto e responsabilità civile IT/FR</li><li>Plan dialectique avanzato</li><li>Primato UE, CGUE vs CEDU</li><li>Immigrazione, ambiente, AI Act</li></ul></div>
+    <div class="infobox ib-amber"><div class="infobox-title">Obiettivi produzione</div><ul><li>Commentaire 400 parole strutturato</li><li>Colloquio simulato mensile</li><li>Prima bozza lettera motivazione</li><li>Glossario bilingue 150+ termini</li></ul></div>
+  </div>
+  <div id="weeks-fase2"></div>
+</div>
+
+<!-- FASE 3 -->
+<div class="section" id="fase3">
+  <div class="section-intro">Dicembre 2026 – Febbraio 2027 · Obiettivo: C1 produttivo, colloquio fluido, 12 simulazioni complessive. Pausa natalizia a ritmo ridotto. Temi avanzati: bioetica, giustizia internazionale, populismo.</div>
+  <div style="display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:1rem">
+    <div class="infobox ib-amber"><div class="infobox-title">Temi nuovi</div><ul><li>Populismo e democrazia liberale</li><li>Bioetica e diritto (fine vita, aborto)</li><li>Giustizia internazionale (CPI, ICJ)</li><li>Globalizzazione e armonizzazione</li></ul></div>
+    <div class="infobox ib-blue"><div class="infobox-title">Produzione</div><ul><li>Commentaire 450 parole</li><li>Colloquio simulato settimanale</li><li>Lettera quasi definitiva (febbraio)</li><li>Glossario 200+ termini</li></ul></div>
+  </div>
+  <div id="weeks-fase3"></div>
+</div>
+
+<!-- FASE 4 -->
+<div class="section" id="fase4">
+  <div class="section-intro">Marzo – Maggio 2027 · Priorità assoluta: maturità (voto minimo 70/100 per la Sorbona). La preparazione universitaria passa in secondo piano. Le materie del LES allenano anche la selezione UniFI.</div>
+  <div class="infobox ib-red" style="margin-bottom:10px">
+    <div class="infobox-title">⚠ Non sacrificare la maturità per la selezione</div>
+    <ul><li>Diritto, economia, francese e storia del LES si preparano in parallelo alla selezione</li><li>Ogni simulazione della seconda prova su Stato/Europa vale anche per il colloquio</li></ul>
+  </div>
+  <div id="weeks-fase4"></div>
+</div>
+
+<!-- FASE 5 -->
+<div class="section" id="fase5">
+  <div class="section-intro">Giugno – Luglio 2027 · Obiettivo: superare la selezione UniFI. In questa fase non si impara nulla di nuovo — si consolida e ci si allena. Riposo adeguato la sera prima delle prove.</div>
+  <div class="infobox ib-red" style="margin-bottom:10px">
+    <div class="infobox-title">Scadenze da non perdere</div>
+    <ul>
+      <li>3 giugno: apertura portale domande — candidati subito</li>
+      <li>16 luglio ore 12:00: scadenza domanda (nessuna proroga)</li>
+      <li>23 luglio ore 9:00: prova scritta, campus Novoli</li>
+      <li>23–25 luglio: colloqui orali</li>
+    </ul>
+  </div>
+  <div id="weeks-fase5"></div>
+</div>
+
+</div>
+
+<script>
+const LEGEND = `<div class="legend">
+<div class="leg"><div class="leg-dot" style="background:var(--blue200)"></div>Francese</div>
+<div class="leg"><div class="leg-dot" style="background:var(--green200)"></div>Diritto</div>
+<div class="leg"><div class="leg-dot" style="background:var(--amber200)"></div>Cultura generale</div>
+<div class="leg"><div class="leg-dot" style="background:var(--red200)"></div>Simulazione</div>
+<div class="leg"><div class="leg-dot" style="background:var(--gray200)"></div>Riposo</div>
+</div>`;
+
+const days = ["Lun","Mar","Mer","Gio","Ven","Sab","Dom"];
+
+function renderWeeks(weeks, containerId) {
+  const el = document.getElementById(containerId);
+  el.innerHTML = LEGEND;
+  weeks.forEach((w, wi) => {
+    const div = document.createElement('div');
+    div.className = 'week';
+    const daysHtml = days.map((d, di) => {
+      const items = w.days[di] || [];
+      return `<div class="day-col">
+        <div class="day-name">${d}</div>
+        <div class="day-items">${items.map(it => `<div class="day-item di-${it.t}">${it.s}</div>`).join('')}</div>
+      </div>`;
+    }).join('');
+    div.innerHTML = `
+      <div class="week-head" onclick="togW(this)">
+        <div style="flex:1">
+          <div class="week-label">${w.label}</div>
+          <div class="week-dates">${w.dates}</div>
+        </div>
+        <span class="week-chev">▶</span>
+      </div>
+      <div class="week-body">
+        ${w.tip ? `<div class="tip">${w.tip}</div>` : ''}
+        <div class="days-grid">${daysHtml}</div>
+      </div>`;
+    el.appendChild(div);
+    if (wi === 0) div.querySelector('.week-head').click();
+  });
+}
+
+function togW(head) {
+  const body = head.nextElementSibling;
+  const chev = head.querySelector('.week-chev');
+  const open = body.classList.toggle('open');
+  chev.classList.toggle('open', open);
+}
+
+function showPhase(id, btn) {
+  document.querySelectorAll('.section').forEach(s => s.classList.remove('active'));
+  document.querySelectorAll('.phase-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* ── DATA ── */
+const fase1 = [
+  { label:"Sett. 1 — Orientamento & abitudini", dates:"1–7 giugno 2026",
+    tip:"Non partire a tutta velocità. Costruisci l'abitudine prima del contenuto.",
+    days:[
+      [{t:"fr",s:"Leggi un articolo Le Monde"},{t:"dr",s:"Ripassa Stato e Costituzione LES"}],
+      [{t:"fr",s:"Scrivi 10 righe in francese"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Fonti del diritto italiano"},{t:"fr",s:"Podcast France Culture"}],
+      [{t:"fr",s:"Secondo articolo Le Monde"},{t:"cu",s:"Ministri giustizia IT/FR"}],
+      [{t:"dr",s:"Diritto pubblico vs privato"},{t:"fr",s:"10 righe libere in francese"}],
+      [{t:"cu",s:"Lettura settimanale"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 2 — Accenti & morfologia", dates:"8–14 giugno 2026",
+    tip:"Accenti e accordi sono i tuoi errori sistematici emersi dal test. Attaccali subito.",
+    days:[
+      [{t:"fr",s:"Esercizi accenti: é è ê à ù ï"},{t:"dr",s:"Costituzione italiana art. 1–12"}],
+      [{t:"fr",s:"Editoriale: sottolinea tutti gli accenti"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Accordo participio passato con avoir"},{t:"dr",s:"Parlamento italiano — composizione"}],
+      [{t:"fr",s:"15 righe: 'Qu'est-ce que la démocratie?'"},{t:"cu",s:"Quinta Repubblica francese"}],
+      [{t:"dr",s:"Parlamento IT vs Assemblée nationale"},{t:"fr",s:"France Culture (20 min)"}],
+      [{t:"fr",s:"Riscrivi il test con le correzioni applicate"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 3 — Lessico formale & diritto francese", dates:"15–21 giugno 2026",
+    tip:"Inizia un glossario bilingue personale (IT/FR) per i termini giuridici — ti servirà per tutto l'anno.",
+    days:[
+      [{t:"fr",s:"10 connettivi formali: néanmoins, en revanche, il convient de noter…"},{t:"dr",s:"Fonti del diritto francese: Constitution, loi, règlement"}],
+      [{t:"fr",s:"Le Monde Diplomatique: annota 10 espressioni formali"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Sistema giudiziario FR: Conseil d'État, Cour de cassation, Conseil constitutionnel"},{t:"fr",s:"3 frasi con i connettivi studiati"}],
+      [{t:"fr",s:"15 righe: 'Pourquoi l'indépendance de la justice est fondamentale?'"},{t:"cu",s:"Conseil constitutionnel vs Corte Costituzionale IT"}],
+      [{t:"dr",s:"Confronto Corte Costituzionale IT/FR"},{t:"fr",s:"Aggiorna glossario bilingue"}],
+      [{t:"cu",s:"Lettura su attualità politica"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 4 — Prima simulazione scritta", dates:"22–30 giugno 2026",
+    tip:"Non importa se viene male — serve per capire dove sei, non per dimostrare dove vuoi arrivare.",
+    days:[
+      [{t:"fr",s:"Struttura commentaire: intro — développement — conclusion"},{t:"dr",s:"Montesquieu e divisione dei poteri"}],
+      [{t:"fr",s:"Leggi un modello di commentaire online"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"sc",s:"SIMULAZIONE 1: commento 300 parole, 60 min — senza vocabolario"}],
+      [{t:"fr",s:"Rileggi simulazione: conta errori"},{t:"dr",s:"Patti Lateranensi e Concordato 1984"}],
+      [{t:"cu",s:"Laïcité: legge 1905 e legge 2004 (signes ostensibles)"},{t:"fr",s:"Aggiorna glossario"}],
+      [{t:"fr",s:"Versione migliorata della simulazione"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 5 — Unione Europea e diritto comunitario", dates:"1–7 luglio 2026",
+    tip:"L'UE è un tema centralissimo nel colloquio. Saper spiegare in francese come funziona è quasi obbligatorio.",
+    days:[
+      [{t:"dr",s:"Istituzioni europee: Parlamento, Commissione, Consiglio, CGUE"},{t:"fr",s:"Articolo Le Monde sull'UE"}],
+      [{t:"dr",s:"Fonti UE: regolamenti, direttive, decisioni"},{t:"cu",s:"France 24 — politica europea"}],
+      [{t:"fr",s:"15 righe: 'Comment fonctionne l'Union européenne?'"},{t:"dr",s:"CEDU — Corte europea diritti umani"}],
+      [{t:"cu",s:"Sentenze CEDU su Italia e Francia"},{t:"fr",s:"10 termini nel glossario"}],
+      [{t:"dr",s:"Diritto IT/FR/UE: gerarchia delle fonti"},{t:"fr",s:"France Culture (20 min)"}],
+      [{t:"cu",s:"Lettura attualità europea"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 6 — Diritti fondamentali & attualità", dates:"8–14 luglio 2026",
+    tip:"Scegli ogni settimana un tema di attualità e approfondiscilo sia in italiano che in francese.",
+    days:[
+      [{t:"dr",s:"Artt. 13–28 Cost. IT e DDHC 1789 francese"},{t:"fr",s:"Articolo su diritti in Francia"}],
+      [{t:"fr",s:"15 righe: 'Droits civils vs droits politiques?'"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Libertà di espressione: limiti IT e FR"},{t:"fr",s:"Editoriale Le Monde politico-sociale"}],
+      [{t:"sc",s:"SIMULAZIONE 2: commento 300 parole, 60 min"}],
+      [{t:"fr",s:"Correzione sim. 2"},{t:"cu",s:"Aggiorna glossario"}],
+      [{t:"cu",s:"Approfondimento libero su un tema d'interesse"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 7 — Orale & prima bozza lettera", dates:"15–21 luglio 2026",
+    tip:"Parla ad alta voce in francese ogni giorno, anche da solo. La fluidità si costruisce solo così.",
+    days:[
+      [{t:"fr",s:"Discorso 3 min: 'Pourquoi ce cours?' — scaletta poi improvvisa"},{t:"dr",s:"Ripassa tutto il diritto di giugno (30 min)"}],
+      [{t:"fr",s:"Registra, riascolta, nota errori"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Discorso 3 min: 'Qu'est-ce que l'État de droit?'"},{t:"dr",s:"Ripassa sistemi giudiziari IT/FR"}],
+      [{t:"fr",s:"Prima bozza lettera di motivazione in italiano"},{t:"cu",s:"France 24 o podcast"}],
+      [{t:"fr",s:"Bozza lettera in francese — non tradurre, riscrivi"}],
+      [{t:"fr",s:"Orale: spiega un articolo a voce per 2 min"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 8 — Consolidamento & fine fase 1", dates:"22–31 luglio 2026",
+    tip:"Conserva tutte le simulazioni per confrontarle a settembre e misurare i progressi.",
+    days:[
+      [{t:"sc",s:"SIMULAZIONE 3: commento 300 parole, 60 min"}],
+      [{t:"fr",s:"Correzione sim. 3 — confronta con sim. 1 e 2"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Mappa mentale di tutto il diritto studiato"},{t:"fr",s:"Aggiorna glossario (obiettivo: 60+ termini)"}],
+      [{t:"fr",s:"3 discorsi orali da 2 min: laïcité, Montesquieu, UE"}],
+      [{t:"fr",s:"Rilleggi bozza lettera FR — segnala punti deboli"}],
+      [{t:"ri",s:"Fine fase 1 — da lunedì ritmo estivo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Agosto 2026 — Mantenimento estivo", dates:"1–31 agosto 2026",
+    tip:"Agosto: 3 attività a settimana. L'obiettivo è non perdere le abitudini costruite a giugno-luglio.",
+    days:[
+      [{t:"fr",s:"Leggi un articolo in francese (tema libero)"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"ri",s:"Giornata libera"}],
+      [{t:"fr",s:"10 righe libere in francese"},{t:"dr",s:"2 pagine appunti diritto (5 min)"}],
+      [{t:"ri",s:"Giornata libera"}],
+      [{t:"fr",s:"Podcast France Culture o serie in francese"},{t:"cu",s:"Articolo attualità IT/FR"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+];
+
+const fase2 = [
+  { label:"Sett. 1 — Rientro & ripresa", dates:"1–6 settembre 2026",
+    tip:"Prima settimana di quinta: riprendi le abitudini prima di aggiungere nuovi contenuti.",
+    days:[
+      [{t:"fr",s:"Rileggi glossario + 5 nuovi termini"},{t:"dr",s:"Mappa mentale diritto (ripasso 30 min)"}],
+      [{t:"fr",s:"Leggi articolo Le Monde"},{t:"cu",s:"France 24 — riprendi l'ascolto quotidiano"}],
+      [{t:"fr",s:"Riscrivi un commento estivo con le correzioni"},{t:"dr",s:"Ripassa sistemi giudiziari IT/FR"}],
+      [{t:"cu",s:"Notizie politiche settembre IT e FR"},{t:"fr",s:"France Culture (20 min)"}],
+      [{t:"fr",s:"15 righe libere in francese"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 2 — Testi complessi & subjonctif avancé", dates:"7–13 settembre 2026",
+    tip:"Da questa settimana: un testo difficile ogni lunedì. Le Monde Diplomatique è perfetto.",
+    days:[
+      [{t:"fr",s:"Le Monde Diplomatique: annota struttura argomentativa"},{t:"dr",s:"Contratto italiano: formazione, validità, effetti"}],
+      [{t:"fr",s:"Esercizi subjonctif: afin que, bien que, à moins que…"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Contratto francese Code civil — confronto IT/FR"},{t:"fr",s:"Editoriale Le Figaro vs Le Monde"}],
+      [{t:"fr",s:"20 righe: comparazione sistemi giuridici IT/FR — subjonctif x3"},{t:"cu",s:"Code civil napoleonico: importanza storica"}],
+      [{t:"dr",s:"Glossario termini contrattuali bilingui"},{t:"fr",s:"France Culture (20 min)"}],
+      [{t:"cu",s:"Lettura libera: saggio giuridico o politico"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 3 — Responsabilità civile & registro C1", dates:"14–20 settembre 2026",
+    tip:"Inizia a evitare le parole semplici: 'beaucoup' → 'considérablement', 'mais' → 'néanmoins'.",
+    days:[
+      [{t:"dr",s:"Responsabilità civile IT: art. 2043 c.c., colpa, danno"},{t:"fr",s:"Le Monde Diplomatique"}],
+      [{t:"fr",s:"Riscrivi un tuo paragrafo usando SOLO lessico C1 formale"},{t:"dr",s:"Responsabilità civile FR: faute, dommage, causalité"}],
+      [{t:"fr",s:"20 righe confronto responsabilità civile IT/FR in francese formale"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Diritto di famiglia: matrimonio, divorzio IT/FR"},{t:"fr",s:"Aggiorna glossario"}],
+      [{t:"fr",s:"France Culture su attualità giuridica (20 min)"}],
+      [{t:"sc",s:"SIMULAZIONE 4: commento 350 parole, 60 min"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 4 — UE avanzato & CEDU", dates:"21–30 settembre 2026",
+    tip:"Arriva a saper distinguere CGUE (Lussemburgo) da CEDU (Strasburgo) — errore frequentissimo al colloquio.",
+    days:[
+      [{t:"fr",s:"Correzione simulazione 4"},{t:"dr",s:"Primato UE: sentenze Costa/ENEL e Simmenthal"}],
+      [{t:"dr",s:"CGUE vs CEDU: competenze, accesso, effetti"},{t:"fr",s:"Articolo su caso recente CEDU"}],
+      [{t:"fr",s:"20 righe: 'Différence entre CGUE et CEDH?'"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"cu",s:"Schengen, libera circolazione, Brexit"},{t:"fr",s:"France Culture (20 min)"}],
+      [{t:"dr",s:"Glossario UE: renvoi préjudiciel, primauté…"},{t:"fr",s:"Editoriale su attualità europea"}],
+      [{t:"cu",s:"Lettura approfondimento internazionale"}],
+      [{t:"ri",s:"Fine settembre"}],
+    ]},
+  { label:"Sett. 5 — Commentaire avanzato (plan dialectique)", dates:"1–11 ottobre 2026",
+    tip:"Da questo mese il commento deve avere una struttura rigorosa: thèse–antithèse–synthèse.",
+    days:[
+      [{t:"fr",s:"Studia plan dialectique: thèse–antithèse–synthèse"},{t:"dr",s:"Stato di diritto: origini, elementi, crisi contemporanee"}],
+      [{t:"fr",s:"Analizza commentaire modello: identifica le 3 parti"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Scrivi solo l'introduction (80 parole): accroche + contexte + thèse"},{t:"dr",s:"Semipresidenzialismo francese: poteri del Presidente"}],
+      [{t:"fr",s:"Completa il commento: développement + conclusion — 350 parole"},{t:"cu",s:"Elezioni europee 2024: risultati e conseguenze"}],
+      [{t:"dr",s:"Presidenzialismo FR vs parlamentarismo IT"},{t:"fr",s:"Aggiorna glossario"}],
+      [{t:"sc",s:"SIMULAZIONE 5: commento 350–400 parole, 60 min — plan dialectique"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 6 — Orale intensivo", dates:"12–18 ottobre 2026",
+    tip:"Parla in francese ad alta voce ogni giorno: 5 min da solo valgono più di 30 min di lettura passiva.",
+    days:[
+      [{t:"fr",s:"Correzione simulazione 5"},{t:"fr",s:"Discorso 3 min: 'Pourquoi ce cours binational?' — improvvisa"}],
+      [{t:"fr",s:"Registra, riascolta, nota esitazioni e errori"},{t:"dr",s:"Gerarchia delle fonti IT e FR a confronto"}],
+      [{t:"fr",s:"Discorso 3 min: 'Qu'est-ce que la laïcité à la française?' — senza appunti"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Discorso 3 min: 'Divisione dei poteri secondo Montesquieu'"},{t:"cu",s:"Leggi un tema che non conosci bene"}],
+      [{t:"fr",s:"Discorso 3 min: 'Diritto civile vs diritto penale?'"},{t:"dr",s:"Diritto penale: legalità, colpevolezza, presunzione di innocenza"}],
+      [{t:"fr",s:"Colloquio simulato 15 min: domande in italiano, rispondi in francese"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 7 — Immigrazione & diritti", dates:"19–25 ottobre 2026",
+    tip:"Scegli un tema di attualità ogni settimana e studia come viene trattato in Italia e in Francia.",
+    days:[
+      [{t:"cu",s:"Immigrazione: leggi un articolo italiano e uno francese"},{t:"fr",s:"Le Monde Diplomatique"}],
+      [{t:"fr",s:"20 righe: 'Comment l'Europe gère-t-elle la question migratoire?'"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Diritto d'asilo: Convenzione Ginevra 1951, reg. Dublino"},{t:"fr",s:"Glossario: asile, réfugié, expulsion…"}],
+      [{t:"fr",s:"Discorso 3 min: 'Rôle de l'UE face à l'immigration?'"},{t:"cu",s:"France Culture su immigrazione"}],
+      [{t:"sc",s:"SIMULAZIONE 6: commento 400 parole, 60 min — immigrazione o democrazia"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 8 — Revisione & autovalutazione", dates:"26–31 ottobre 2026",
+    tip:"Rileggi tutti i commenti da giugno. Dovresti vedere un miglioramento. Se non lo vedi, identifica gli errori che si ripetono.",
+    days:[
+      [{t:"fr",s:"Correzione simulazione 6"},{t:"dr",s:"Principio di legalità penale: nulla poena sine lege"}],
+      [{t:"fr",s:"Rileggi TUTTI i commenti da giugno: lista errori che si ripetono"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Versione perfezionata del commento migliore"},{t:"dr",s:"Aggiorna glossario (obiettivo: 120+ termini)"}],
+      [{t:"fr",s:"Discorso 3 min: 'Principio di legalità nel diritto penale'"},{t:"cu",s:"Leggi su tema nuovo: ambiente, IA, sport e diritto"}],
+      [{t:"ri",s:"Priorità scuola: periodo di verifiche"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 9 — Ambiente, tecnologia & diritto", dates:"1–8 novembre 2026",
+    tip:"Novembre è il mese per allargare i temi. Ambiente e IA sono terreni molto apprezzati dalla commissione.",
+    days:[
+      [{t:"cu",s:"Ambiente e diritto: cerca 'droit environnement France'"},{t:"fr",s:"Articolo Le Monde su clima"}],
+      [{t:"fr",s:"20 righe: 'Le droit peut-il protéger efficacement l'environnement?'"},{t:"dr",s:"Art. 9 Costituzione italiana (tutela ambiente, 2022)"}],
+      [{t:"cu",s:"Charte de l'environnement francese (2004)"},{t:"fr",s:"France Culture su ambiente (20 min)"}],
+      [{t:"fr",s:"Discorso 3 min: 'Comment le droit protège l'environnement IT/FR?'"},{t:"dr",s:"Glossario: développement durable, préjudice écologique…"}],
+      [{t:"sc",s:"SIMULAZIONE 7: commento 400 parole, 60 min"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 10 — Prima bozza lettera di motivazione", dates:"9–15 novembre 2026",
+    tip:"Non è troppo presto: scriverla ora ti aiuta a capire cosa ti manca ancora da studiare o da vivere.",
+    days:[
+      [{t:"fr",s:"Correzione simulazione 7"},{t:"fr",s:"Scrivi 10 motivazioni reali per scegliere questo corso"}],
+      [{t:"fr",s:"Prima bozza lettera in italiano — 400 parole, scrivi liberamente"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Rileggi: identifica motivazioni generiche e punti deboli"},{t:"dr",s:"Carriere giuridiche internazionali: magistratura UE, avvocatura"}],
+      [{t:"fr",s:"Seconda bozza lettera IT: aggiungi esempio concreto e progetto professionale"},{t:"cu",s:"France Culture (20 min)"}],
+      [{t:"fr",s:"Inizia traduzione in francese — NON tradurre parola per parola, riscrivi"}],
+      [{t:"fr",s:"Completa bozza francese — falla rileggere a insegnante di francese"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 11 — Colloquio simulato avanzato", dates:"16–22 novembre 2026",
+    tip:"Le domande improvvisate sono più importanti di quelle preparate. L'improvvisazione è una competenza.",
+    days:[
+      [{t:"fr",s:"Colloquio simulato 15–20 min in IT/FR su motivazioni, diritto, attualità"},{t:"dr",s:"AI Act UE: principali disposizioni"}],
+      [{t:"fr",s:"Analisi colloquio: cosa non hai saputo rispondere? Studia quelle lacune"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"20 righe: 'L'intelligence artificielle représente-t-elle un défi pour le droit?'"},{t:"cu",s:"EU AI Act — principali disposizioni IT/FR"}],
+      [{t:"fr",s:"Discorso 3 min sull'AI Act — senza appunti"},{t:"dr",s:"Glossario diritto digitale"}],
+      [{t:"sc",s:"SIMULAZIONE 8: commento 400 parole, 60 min — testo scelto da qualcun altro"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 12 — Bilancio fase 2", dates:"23–30 novembre 2026",
+    tip:"A fine novembre dovresti essere a C1 ricettivo e B2+ produttivo. La fase 3 lavora sulla precisione e la velocità.",
+    days:[
+      [{t:"fr",s:"Correzione simulazione 8 — confronta con simulazione 4 di settembre"},{t:"dr",s:"Mappa mentale finale di tutto il diritto studiato in fase 2"}],
+      [{t:"fr",s:"Rileggi tutte le bozze lettera: quale versione è più convincente?"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Discorso 5 min: 'Présentez-vous et expliquez votre projet d'études'"},{t:"dr",s:"Aggiorna glossario (obiettivo: 150 termini)"}],
+      [{t:"fr",s:"Riascolto discorsi di ottobre — confronta con come parli oggi"},{t:"cu",s:"Leggi su tema mai affrontato: bioetica, proprietà intellettuale"}],
+      [{t:"fr",s:"Lista lacune aperte — da rafforzare in fase 3"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Fine fase 2"}],
+    ]},
+];
+
+const fase3 = [
+  { label:"Sett. 1 — Populismo & media e democrazia", dates:"1–13 dicembre 2026",
+    tip:"Temi avanzati che distinguono i candidati forti. La commissione apprezza chi va oltre i classici.",
+    days:[
+      [{t:"fr",s:"Le Monde Diplomatique: populismo in Europa"},{t:"dr",s:"Stato di diritto e sue minacce contemporanee"}],
+      [{t:"fr",s:"20 righe: 'Le populisme menace-t-il la démocratie libérale?'"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Media e democrazia: libertà di stampa, fake news, Digital Services Act"},{t:"fr",s:"Glossario: populisme, démocratie illibérale, fake news…"}],
+      [{t:"fr",s:"Discorso 4 min: 'Quels sont les défis de la démocratie aujourd'hui?'"},{t:"cu",s:"Digital Services Act UE"}],
+      [{t:"sc",s:"SIMULAZIONE 9: commento 400 parole, 60 min — testo a sorpresa"},{t:"fr",s:"France Culture (20 min)"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 2 — Bioetica & diritti della persona", dates:"14–20 dicembre 2026",
+    tip:"Legge 194/1978 (IT) e loi Veil 1975 (FR): un confronto storico e giuridico molto apprezzato nel colloquio.",
+    days:[
+      [{t:"fr",s:"Correzione simulazione 9"},{t:"dr",s:"Bioetica e diritto: fine vita, aborto, procreazione assistita IT vs FR"}],
+      [{t:"fr",s:"20 righe: 'Peut-on légiférer sur les questions éthiques?' — plan dialectique"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Legge 194/1978 (IT) e loi Veil 1975 (FR): confronto storico-giuridico"},{t:"fr",s:"Glossario bioetica: euthanasie, GPA, PMA…"}],
+      [{t:"fr",s:"Discorso 4 min: 'Comment le droit aborde-t-il les questions bioéthiques?'"},{t:"cu",s:"France Culture su bioetica"}],
+      [{t:"ri",s:"Pre-natale: priorità alla scuola"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Pausa natalizia — ritmo ridotto", dates:"21 dicembre 2026 – 6 gennaio 2027",
+    tip:"Vacanze non significa stop totale. 3 attività a settimana mantengono le abitudini senza esaurire.",
+    days:[
+      [{t:"fr",s:"Leggi articolo in francese (tema libero)"},{t:"ri",s:"Resto della giornata libero"}],
+      [{t:"ri",s:"Vacanze"}],
+      [{t:"fr",s:"10–15 righe in francese su attualità"},{t:"ri",s:"Resto libero"}],
+      [{t:"ri",s:"Vacanze"}],
+      [{t:"fr",s:"Podcast France Culture o film/serie in francese"},{t:"ri",s:"Resto libero"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Vacanze"}],
+    ]},
+  { label:"Sett. 4 — Giustizia internazionale & globalizzazione", dates:"7–18 gennaio 2027",
+    tip:"CPI, ICJ, tribunali ad hoc: sapere la differenza e spiegarla in francese impressiona la commissione.",
+    days:[
+      [{t:"cu",s:"Giustizia internazionale: CPI, ICJ, tribunali ad hoc"},{t:"fr",s:"Articolo Le Monde su diritto internazionale"}],
+      [{t:"fr",s:"20 righe: 'La justice internationale est-elle efficace?'"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"dr",s:"Globalizzazione e diritto: armonizzazione vs sovranità nazionale"},{t:"fr",s:"Glossario: CPI/CIJ, droit humanitaire, crime contre l'humanité…"}],
+      [{t:"sc",s:"SIMULAZIONE 10: commento 400–450 parole, 60 min — testo a sorpresa"}],
+      [{t:"fr",s:"Correzione simulazione 10"},{t:"dr",s:"Ripassa: tutto il diritto comparato IT/FR in 1 ora"}],
+      [{t:"fr",s:"Discorso 4 min: 'Qu'est-ce que le droit international humanitaire?'"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 5 — Colloquio simulato settimanale", dates:"19–31 gennaio 2027",
+    tip:"Da questa settimana: un colloquio simulato a settimana. È l'unico modo per costruire fluidità sotto pressione.",
+    days:[
+      [{t:"fr",s:"Colloquio simulato 20 min: domande improvvisate su tutti i temi"},{t:"dr",s:"Principi fondamentali della CEDU: artt. 2–14"}],
+      [{t:"fr",s:"Analisi colloquio + studio lacune emerse"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"20 righe su tema mai scritto prima (sceglilo a caso dal glossario)"},{t:"dr",s:"Protezione internazionale dei diritti umani: meccanismi ONU"}],
+      [{t:"fr",s:"Discorso 4 min: 'Quels droits garantit la CEDH?'"},{t:"cu",s:"France Culture (20 min)"}],
+      [{t:"sc",s:"SIMULAZIONE 11: commento 450 parole, 60 min — testo a sorpresa"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 6 — Lettera definitiva & ripasso globale", dates:"1–15 febbraio 2027",
+    tip:"La lettera va riscritta, non solo corretta. Ogni frase deve suonare naturale in francese — non come una traduzione.",
+    days:[
+      [{t:"fr",s:"Correzione simulazione 11 — sei a 11 simulazioni totali, misura il percorso dall'inizio"},{t:"dr",s:"Mappa mentale globale: tutto il diritto delle fasi 1–3"}],
+      [{t:"fr",s:"Lettera: rileggi la bozza di novembre e riscrivi la versione italiana"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Lettera versione francese: revisione linguistica profonda — ogni frase naturale"},{t:"dr",s:"Ripassa: fonti del diritto IT, FR, UE (gerarchia)"}],
+      [{t:"fr",s:"Fai rileggere la lettera a insegnante di francese — incorpora le correzioni"},{t:"cu",s:"France Culture (20 min)"}],
+      [{t:"fr",s:"Discorso 5 min: 'Présentez-vous, votre parcours et votre projet' — versione completa"},{t:"ri",s:"Poi stop"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Sett. 7 — Bilancio fase 3", dates:"16–28 febbraio 2027",
+    tip:"Confronta la simulazione 12 con la simulazione 1 di giugno 2026. Dovresti vedere un salto qualitativo netto.",
+    days:[
+      [{t:"fr",s:"Colloquio simulato finale fase 3: 25 min — registra tutta la sessione"},{t:"dr",s:"Ripassa: AI Act, DSA, Charte environnement"}],
+      [{t:"fr",s:"Riascolto colloquio: valuta fluidità, grammatica, lessico"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"sc",s:"SIMULAZIONE 12: commento 450 parole, 60 min — testo a sorpresa"}],
+      [{t:"fr",s:"Correzione sim. 12 — confronta con sim. 1 di giugno 2026: misura il percorso totale"},{t:"dr",s:"Aggiorna glossario (obiettivo: 200+ termini)"}],
+      [{t:"fr",s:"Lista lacune aperte da colmare in fase 4"},{t:"ri",s:"Poi stop"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Fine fase 3"}],
+    ]},
+];
+
+const fase4 = [
+  { label:"Marzo 2027 — Scuola + perfezionamento", dates:"Marzo 2027",
+    tip:"Non sacrificare la maturità per la selezione. Le materie del LES si preparano in parallelo.",
+    days:[
+      [{t:"dr",s:"Scuola: diritto e scienze umane — prepara le verifiche con attenzione"},{t:"fr",s:"Leggi un articolo Le Monde (mantenimento)"}],
+      [{t:"fr",s:"Discorso orale 5 min su tema di attualità — settimanale"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"sc",s:"Simulazione MATURITÀ (prima prova, Tip. B o C) — 3 ore"}],
+      [{t:"fr",s:"Aggiorna glossario + lettera: ultime revisioni linguistiche"},{t:"cu",s:"France Culture (20 min)"}],
+      [{t:"dr",s:"Scuola: ripassa moduli di diritto del programma LES quinta"},{t:"ri",s:"Poi stop"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Aprile 2027 — Simulazioni maturità intensificate", dates:"Aprile 2027",
+    tip:"Due simulazioni di maturità al mese — alternare prima e seconda prova. Fatti correggere da un professore.",
+    days:[
+      [{t:"dr",s:"Scuola: priorità alle verifiche di aprile"},{t:"fr",s:"Le Monde Diplomatique (mantenimento)"}],
+      [{t:"sc",s:"Simulazione MATURITÀ (seconda prova: scienze umane) — 3 ore"}],
+      [{t:"fr",s:"Colloquio simulato 20 min: domande su tutto il programma preparato"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"sc",s:"Simulazione MATURITÀ (prima prova, Tip. A) — 3 ore"}],
+      [{t:"fr",s:"Discorso orale 5 min + France Culture (20 min)"},{t:"ri",s:"Poi stop"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"Maggio 2027 — Candidatura & ripasso pre-maturità", dates:"Maggio 2027",
+    tip:"La lettera deve essere stampata, firmata a mano e scansionata in PDF. Fallo in anticipo.",
+    days:[
+      [{t:"fr",s:"Candidatura: registrati sul portale UniFI — apertura 3 giugno, preparati in anticipo"},{t:"dr",s:"Scuola: ripasso generale per maturità"}],
+      [{t:"sc",s:"Simulazione MATURITÀ completa (prima + seconda prova in due giorni)"}],
+      [{t:"fr",s:"Lettera di motivazione: versione DEFINITIVA IT e FR — stampa e firma a mano"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"CV europeo: aggiornalo con certificazione B2, esperienze, soggiorni"},{t:"dr",s:"Scuola: ultimi ripasso maturità"}],
+      [{t:"sc",s:"Simulazione MATURITÀ (seconda prova)"},{t:"ri",s:"Poi stop — ultima settimana pre-esami"}],
+      [{t:"ri",s:"Riposo pre-maturità"}],
+      [{t:"ri",s:"Concentrazione sulla maturità"}],
+    ]},
+];
+
+const fase5 = [
+  { label:"Giugno 2027 (post-maturità) — Candidatura & ripresa", dates:"Giugno 2027",
+    tip:"Post-maturità: 3–4 giorni di riposo, poi si riprende. Non perdere il ritmo costruito in un anno.",
+    days:[
+      [{t:"sc",s:"Completa e invia domanda online: autocertificazione, CV, lettera IT+FR firmata"},{t:"ri",s:"Poi riposo post-maturità"}],
+      [{t:"fr",s:"Leggi articolo Le Monde — ripresa dopo la maturità"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"sc",s:"SIMULAZIONE 13: commento 450 parole, 60 min — testo a sorpresa"}],
+      [{t:"fr",s:"Correzione simulazione 13"},{t:"dr",s:"Ripassa tutti i temi principali (1 ora rapida)"}],
+      [{t:"fr",s:"Discorso 5 min su tema di attualità — settimanale"},{t:"ri",s:"Poi stop"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"1–15 luglio — Intensificazione", dates:"1–15 luglio 2027",
+    tip:"Da ora: una simulazione ogni 4–5 giorni, un colloquio simulato a settimana. Leggi Le Monde ogni giorno.",
+    days:[
+      [{t:"sc",s:"SIMULAZIONE 14: commento 450 parole, 60 min — testo a sorpresa"},{t:"fr",s:"Leggi Le Monde ogni giorno da oggi"}],
+      [{t:"fr",s:"Correzione simulazione 14"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Colloquio simulato 25 min: domande improvvisate su tutto il programma"},{t:"dr",s:"Ripassa: CEDU vs CGUE — differenza chiave"}],
+      [{t:"sc",s:"SIMULAZIONE 15: commento 450 parole, 60 min"}],
+      [{t:"fr",s:"Correzione sim. 15 + colloquio simulato 25 min"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"ri",s:"Riposo"}],
+      [{t:"ri",s:"Giornata libera"}],
+    ]},
+  { label:"16–22 luglio — Settimana prima delle prove", dates:"16–22 luglio 2027",
+    tip:"Non aggiungere nulla di nuovo. Consolida, allenati, riposati bene la sera prima.",
+    days:[
+      [{t:"fr",s:"Le Monde: attualità degli ultimi 7 giorni — nota 3 temi caldi"},{t:"dr",s:"Ripassa in 30 min: mappa mentale finale di tutto il diritto"}],
+      [{t:"sc",s:"SIMULAZIONE FINALE: commento 450 parole su testo recentissimo, 60 min"}],
+      [{t:"fr",s:"Colloquio simulato finale: 30 min — tutte le domande possibili"},{t:"cu",s:"France 24 (15 min)"}],
+      [{t:"fr",s:"Rilleggi la lettera di motivazione — ultima volta"},{t:"ri",s:"Poi stop: non aggiungere nulla di nuovo"}],
+      [{t:"ri",s:"Riposo leggero: passeggiata, sport, relax"},{t:"fr",s:"France Culture 20 min (passivo)"}],
+      [{t:"ri",s:"Riposo completo — niente studio"}],
+      [{t:"ri",s:"Riposo — domani la prova scritta"}],
+    ]},
+  { label:"23–25 luglio — Le prove", dates:"23–25 luglio 2027",
+    tip:"Hai fatto il tuo meglio in un anno di lavoro. Ora è il momento di dimostrarlo.",
+    days:[
+      [{t:"sc",s:"23 lug ore 9:00 — PROVA SCRITTA: commento testo in francese, 1 ora, campus Novoli — SENZA vocabolario"}],
+      [{t:"sc",s:"23–24 lug — COLLOQUI ORALI: commissione IT/FR, domande in francese e italiano su motivazioni, diritto, attualità"}],
+      [{t:"sc",s:"25 lug — Eventuali colloqui restanti"},{t:"ri",s:"Attendi i risultati"}],
+      [{t:"ri",s:"Attesa risultati"}],
+      [{t:"ri",s:"Attesa risultati"}],
+      [{t:"ri",s:"Attesa risultati"}],
+      [{t:"ri",s:"Attesa risultati"}],
+    ]},
+];
+
+renderWeeks(fase1, 'weeks-fase1');
+renderWeeks(fase2, 'weeks-fase2');
+renderWeeks(fase3, 'weeks-fase3');
+renderWeeks(fase4, 'weeks-fase4');
+renderWeeks(fase5, 'weeks-fase5');
+</script>
+</body>
+</html>
